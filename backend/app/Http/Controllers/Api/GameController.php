@@ -17,14 +17,6 @@ class GameController extends BaseController
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreGameRequest $request)
@@ -32,12 +24,12 @@ class GameController extends BaseController
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Game $game)
+    #[Authorize('view', Game::class)]
+    public function show(int $id)
     {
-        //
+        $game = Game::with(['homeTeam', 'awayTeam'])->findOrFail($id);
+
+        return new GameResource($game);
     }
 
     /**
