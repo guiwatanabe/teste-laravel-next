@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends BaseController
@@ -59,6 +62,22 @@ class AuthController extends BaseController
     {
         return $this->successResponse('Usuário autenticado.', 200, [
             'user' => $request->user()->only(['id', 'name', 'email']),
+        ]);
+    }
+
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role' => 'user',
+        ]);
+
+        return $this->successResponse('Usuário registrado com sucesso.', 201, [
+            'user' => $user->only(['id', 'name', 'email']),
         ]);
     }
 

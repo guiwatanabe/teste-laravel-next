@@ -12,4 +12,6 @@ Route::prefix('auth')->group(function () {
 
     Route::post('refresh-token', [AuthController::class, 'refresh'])->name('refresh-token');
 
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+
 });
