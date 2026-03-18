@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,8 +43,9 @@ pest()->extend(TestCase::class)
 |
 */
 
-function createUser($attributes = []) {
-    return \App\Models\User::factory()->create($attributes);
+function createUser($attributes = [])
+{
+    return User::factory()->create($attributes);
 }
 
 // ...
