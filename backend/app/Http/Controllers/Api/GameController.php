@@ -16,12 +16,18 @@ class GameController extends BaseController
         return GameResource::collection(Game::with(['homeTeam', 'awayTeam'])->paginate(10));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    #[Authorize('create', Game::class)]
     public function store(StoreGameRequest $request)
     {
-        //
+        $data = $request->validated();
+        $game = Game::create([
+            'home_team_id' => $data['home_team_id'],
+            'away_team_id' => $data['away_team_id'],
+            'played_at' => $data['played_at'],
+            'status' => 'scheduled',
+        ]);
+
+        return response()->json(new GameResource($game->load(['homeTeam', 'awayTeam'])), 201);
     }
 
     #[Authorize('view', Game::class)]
