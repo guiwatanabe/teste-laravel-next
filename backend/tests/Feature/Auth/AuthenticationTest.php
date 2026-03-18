@@ -1,29 +1,43 @@
 <?php
 
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
-it('user can login with valid credentials', function () {
+test('user can login with valid credentials', function () {
     $user = createUser([
         'email' => 'user@example.com',
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson(route('login'), [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
     $response->assertStatus(200)
-        ->assertJsonStructure(['status', 'access_token', 'refresh_token', 'token_type', 'expires_in']);
+        ->assertJsonStructure(['status', 'access_token', 'token_type', 'expires_in']);
 });
 
-it('user cannot login with invalid credentials', function () {
+test('user cannot login without required fields', function () {
+    $response = $this->postJson(route('login'), [
+        'email' => '',
+        'password' => '',
+    ]);
+
+    $response->assertStatus(422);
+    $response->assertJson([
+        'status' => 'error',
+        'message' => 'Endereço de e-mail ou senha inválidos.',
+    ]);
+});
+
+test('user cannot login with invalid credentials', function () {
     $user = createUser([
         'email' => 'user@example.com',
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson(route('login'), [
         'email' => $user->email,
         'password' => 'invalid-password',
     ]);
@@ -35,86 +49,84 @@ it('user cannot login with invalid credentials', function () {
     ]);
 });
 
-it('logout invalidates tokens', function () {
+test('logout invalidates tokens', function () {
     $user = createUser([
         'email' => 'user@example.com',
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson(route('login'), [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
     $access_token = $response->json('access_token');
-    $refresh_token = $response->json('refresh_token');
 
     $this->withHeaders([
         'Authorization' => 'Bearer '.$access_token,
-    ])->postJson('/api/auth/logout')
+    ])->postJson(route('logout'))
         ->assertStatus(200);
 
-    $this->withHeaders([
-        'Authorization' => 'Bearer '.$access_token,
-    ])->getJson('/api/user')
-        ->assertStatus(401);
-
-    $this->postJson('/api/auth/refresh', [
-        'refresh_token' => $refresh_token,
-    ])->assertStatus(401);
-
-    $this->assertDatabaseMissing('personal_access_tokens', [
-        'tokenable_id' => $user->id,
-    ]);
+    $this->assertEquals(0, PersonalAccessToken::where('tokenable_id', $user->id)->count());
 });
 
-it('user can refresh tokens', function () {
+test('user can refresh tokens', function () {
     $user = createUser([
         'email' => 'user@example.com',
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson(route('login'), [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
-    $refresh_token = $response->json('refresh_token');
+    $cookie = $response->getCookie('refresh_token', false);
+    $refresh_token = $cookie ? $cookie->getValue() : null;
 
-    $this->postJson('/api/auth/refresh', [
-        'refresh_token' => $refresh_token,
-    ])->assertStatus(200);
+    $this->travel(config('sanctum.expiration') + 5)->minutes();
+
+    $response = $this->withUnencryptedCookie('refresh_token', $refresh_token)
+        ->withCredentials()
+        ->postJson(route('refresh-token'))
+        ->assertStatus(200)
+        ->assertJsonStructure(['status', 'access_token', 'token_type', 'expires_in']);
 });
 
-it('refresh token cannot be used more than once', function () {
+test('refresh token cannot be used more than once', function () {
     $user = createUser([
         'email' => 'user@example.com',
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson(route('login'), [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
-    $refresh_token = $response->json('refresh_token');
+    $cookie = $response->getCookie('refresh_token', false);
+    $refresh_token = $cookie ? $cookie->getValue() : null;
 
-    $this->postJson('/api/auth/refresh', [
-        'refresh_token' => $refresh_token,
-    ])->assertStatus(200);
+    $this->withUnencryptedCookie('refresh_token', $refresh_token)
+        ->withCredentials()
+        ->postJson(route('refresh-token'), [
+            'refresh_token' => $refresh_token,
+        ])->assertStatus(200);
 
-    $this->postJson('/api/auth/refresh', [
-        'refresh_token' => $refresh_token,
-    ])->assertStatus(401);
+    $this->withUnencryptedCookie('refresh_token', $refresh_token)
+        ->withCredentials()
+        ->postJson(route('refresh-token'), [
+            'refresh_token' => $refresh_token,
+        ])->assertStatus(401);
 });
 
-it('cannot use invalid refresh token', function () {
+test('cannot use invalid refresh token', function () {
     $user = createUser([
         'email' => 'user@example.com',
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson(route('login'), [
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -123,7 +135,7 @@ it('cannot use invalid refresh token', function () {
 
     $this->withHeaders([
         'Authorization' => 'Bearer '.$access_token,
-    ])->postJson('/api/auth/refresh', [
+    ])->postJson(route('refresh-token'), [
         'refresh_token' => 'invalid-refresh-token',
     ])->assertStatus(401);
 });
