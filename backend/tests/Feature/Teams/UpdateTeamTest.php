@@ -15,7 +15,7 @@ test('unauthenticated user cannot update a team', function () {
 test('user with role USER cannot update a team', function () {
     $user = createUser(['role' => 'user']);
     Sanctum::actingAs($user);
-    // Team::factory()->create(['id' => 1, 'name' => 'Team A', 'abbreviation' => 'TMA']);
+    Team::factory()->create(['id' => 1, 'name' => 'Team A', 'abbreviation' => 'TMA']);
 
     $response = $this->patchJson('/api/teams/1', [
         'name' => 'Team A',

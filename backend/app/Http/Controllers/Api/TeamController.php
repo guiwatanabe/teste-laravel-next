@@ -44,11 +44,12 @@ class TeamController extends BaseController
         return new TeamResource($team);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Team $team)
+    #[Authorize('delete', Team::class)]
+    public function destroy(int $id)
     {
-        //
+        $team = Team::findOrFail($id);
+        $team->delete();
+
+        return response()->json(null, 204);
     }
 }

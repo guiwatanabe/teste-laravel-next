@@ -24,4 +24,5 @@ Route::prefix('teams')->middleware('auth:sanctum')->group(function () {
     Route::get('/{id}', [TeamController::class, 'show'])->whereNumber('id')->name('teams.show');
     Route::post('/', [TeamController::class, 'store'])->name('teams.store');
     Route::patch('/{id}', [TeamController::class, 'update'])->whereNumber('id')->name('teams.update');
+    Route::delete('/{id}', [TeamController::class, 'destroy'])->whereNumber('id')->name('teams.destroy');
 });
