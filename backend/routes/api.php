@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -15,5 +16,9 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register'])->name('register');
 
     Route::post('profile', [AuthController::class, 'updateProfile'])->middleware('auth:sanctum')->name('profile.update');
+});
 
+Route::prefix('teams')->middleware('auth:sanctum')->group(function () {
+
+    Route::get('/', [TeamController::class, 'index'])->name('teams.index')->can('viewAny', \App\Models\Team::class);
 });

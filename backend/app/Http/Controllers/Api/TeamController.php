@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
+use App\Http\Resources\TeamResource;
 use App\Models\Team;
 
 class TeamController extends BaseController
@@ -13,7 +14,7 @@ class TeamController extends BaseController
      */
     public function index()
     {
-        //
+        return TeamResource::collection(Team::paginate(10));
     }
 
     /**

@@ -4,15 +4,18 @@ namespace App\Policies;
 
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class TeamPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        return false;
+        return $user->role === 'admin'
+            ? Response::allow()
+            : Response::deny('Você não tem permissão para visualizar os times.');
     }
 
     /**
