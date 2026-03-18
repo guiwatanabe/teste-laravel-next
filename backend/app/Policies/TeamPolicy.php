@@ -31,9 +31,11 @@ class TeamPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        return false;
+        return $user->role === 'admin'
+            ? Response::allow()
+            : Response::deny('Você não tem permissão para criar um time.');
     }
 
     /**

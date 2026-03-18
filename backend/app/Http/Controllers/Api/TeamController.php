@@ -17,20 +17,14 @@ class TeamController extends BaseController
         return TeamResource::collection(Team::paginate(10));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    #[Authorize('create', Team::class)]
     public function store(StoreTeamRequest $request)
     {
-        //
+        $data = $request->validated();
+        $team = Team::create($data);
+
+        return new TeamResource($team);
+
     }
 
     #[Authorize('viewAny', Team::class)]
