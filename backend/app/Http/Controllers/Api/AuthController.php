@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -77,6 +78,23 @@ class AuthController extends BaseController
         ]);
 
         return $this->successResponse('Usuário registrado com sucesso.', 201, [
+            'user' => $user->only(['id', 'name', 'email']),
+        ]);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request): JsonResponse
+    {
+        $user = $request->user();
+
+        $data = $request->validated();
+
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        $user->update($data);
+
+        return $this->successResponse('Perfil atualizado com sucesso.', 200, [
             'user' => $user->only(['id', 'name', 'email']),
         ]);
     }

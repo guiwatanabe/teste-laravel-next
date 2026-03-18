@@ -14,4 +14,6 @@ Route::prefix('auth')->group(function () {
 
     Route::post('register', [AuthController::class, 'register'])->name('register');
 
+    Route::post('profile', [AuthController::class, 'updateProfile'])->middleware('auth:sanctum')->name('profile.update');
+
 });
