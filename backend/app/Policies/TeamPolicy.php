@@ -21,9 +21,11 @@ class TeamPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Team $team): bool
+    public function view(User $user, Team $team): Response
     {
-        return false;
+        return $user->role === 'admin'
+            ? Response::allow()
+            : Response::deny('Você não tem permissão para visualizar os times.');
     }
 
     /**

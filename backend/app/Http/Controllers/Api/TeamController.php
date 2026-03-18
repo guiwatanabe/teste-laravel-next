@@ -6,12 +6,12 @@ use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
 use App\Http\Resources\TeamResource;
 use App\Models\Team;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
 
 class TeamController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
+    #[Authorize('viewAny', Team::class)]
     public function index()
     {
         return TeamResource::collection(Team::paginate(10));
@@ -33,12 +33,16 @@ class TeamController extends BaseController
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Team $team)
+    #[Authorize('viewAny', Team::class)]
+    public function show(Request $request, int $id)
     {
-        //
+        $team = Team::findOrFail($id);
+
+        if ($request->user()->cannot('view', $team)) {
+            return $this->errorResponse('Você não tem permissão para visualizar os times.', 403);
+        }
+
+        return new TeamResource($team);
     }
 
     /**

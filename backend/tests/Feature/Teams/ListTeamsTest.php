@@ -3,6 +3,10 @@
 use App\Models\Team;
 use Laravel\Sanctum\Sanctum;
 
+test('unauthenticated user cannot list teams', function () {
+    $this->getJson(route('teams.index'))->assertUnauthorized();
+});
+
 test('user with role user cannot list teams', function () {
     $user = createUser(['role' => 'user']);
     Sanctum::actingAs($user);

@@ -20,5 +20,6 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('teams')->middleware('auth:sanctum')->group(function () {
 
-    Route::get('/', [TeamController::class, 'index'])->name('teams.index')->can('viewAny', \App\Models\Team::class);
+    Route::get('/', [TeamController::class, 'index'])->name('teams.index');
+    Route::get('/{id}', [TeamController::class, 'show'])->whereNumber('id')->name('teams.show');
 });
