@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use App\Http\Resources\GameResource;
 use App\Models\Game;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
 
-class GameController extends Controller
+class GameController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
+    #[Authorize('viewAny', Game::class)]
     public function index()
     {
-        //
+        return GameResource::collection(Game::with(['homeTeam', 'awayTeam'])->paginate(10));
     }
 
     /**
