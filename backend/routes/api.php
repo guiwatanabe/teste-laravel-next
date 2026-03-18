@@ -26,4 +26,5 @@ Route::prefix('games')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [GameController::class, 'index'])->name('games.index');
     Route::get('/{id}', [GameController::class, 'show'])->whereNumber('id')->name('games.show');
     Route::post('/', [GameController::class, 'store'])->name('games.store');
+    Route::patch('/{id}', [GameController::class, 'update'])->whereNumber('id')->name('games.update');
 });

@@ -38,20 +38,16 @@ class GameController extends BaseController
         return new GameResource($game);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Game $game)
+    #[Authorize('update', Game::class)]
+    public function update(UpdateGameRequest $request, int $id)
     {
-        //
-    }
+        $game = Game::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateGameRequest $request, Game $game)
-    {
-        //
+        $data = $request->validated();
+        $data['status'] = 'finished';
+        $game->update($data);
+
+        return new GameResource($game->load(['homeTeam', 'awayTeam']));
     }
 
     /**
