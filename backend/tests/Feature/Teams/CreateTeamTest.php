@@ -21,6 +21,10 @@ test('user with role USER cannot create a team', function () {
     ]);
 
     $response->assertStatus(403);
+    $response->assertJson([
+        'status' => 'error',
+        'message' => 'Você não tem permissão para criar um time.',
+    ]);
 });
 
 test('user with role ADMIN can create a team', function () {
@@ -34,10 +38,9 @@ test('user with role ADMIN can create a team', function () {
 
     $response->assertStatus(201)
         ->assertJson([
-            'data' => [
-                'name' => 'Team A',
-                'abbreviation' => 'TMA',
-            ],
+            'id' => 1,
+            'name' => 'Team A',
+            'abbreviation' => 'TMA',
         ]);
 
     $this->assertDatabaseHas('teams', [

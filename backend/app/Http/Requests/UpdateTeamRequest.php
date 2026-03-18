@@ -16,7 +16,7 @@ class UpdateTeamRequest extends BaseRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:255'],
-            'abbreviation' => ['sometimes', 'string', 'size:3', Rule::unique('teams', 'abbreviation')->ignore($this->route('team')->id)],
+            'abbreviation' => ['sometimes', 'string', 'size:3', Rule::unique('teams', 'abbreviation')->ignore($this->route('id'))],
         ];
     }
 }

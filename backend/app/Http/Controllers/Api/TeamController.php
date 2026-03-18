@@ -6,7 +6,6 @@ use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
 use App\Http\Resources\TeamResource;
 use App\Models\Team;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
 
 class TeamController extends BaseController
@@ -23,36 +22,26 @@ class TeamController extends BaseController
         $data = $request->validated();
         $team = Team::create($data);
 
-        return new TeamResource($team);
-
+        return response()->json(new TeamResource($team), 201);
     }
 
-    #[Authorize('viewAny', Team::class)]
-    public function show(Request $request, int $id)
+    #[Authorize('view', Team::class)]
+    public function show(int $id)
     {
         $team = Team::findOrFail($id);
 
-        if ($request->user()->cannot('view', $team)) {
-            return $this->errorResponse('Você não tem permissão para visualizar os times.', 403);
-        }
-
         return new TeamResource($team);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Team $team)
+    #[Authorize('update', Team::class)]
+    public function update(UpdateTeamRequest $request, int $id)
     {
-        //
-    }
+        $team = Team::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTeamRequest $request, Team $team)
-    {
-        //
+        $data = $request->validated();
+        $team->update($data);
+
+        return new TeamResource($team);
     }
 
     /**

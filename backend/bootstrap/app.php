@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -17,6 +18,13 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (AccessDeniedHttpException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage() ?: 'Acesso negado.',
+            ], 403);
+        });
+
         $exceptions->render(function (ModelNotFoundException $e) {
             $modelName = $e->getModel();
             $message = 'Recurso não encontrado'.($modelName ? " ({$modelName})" : '').'.';

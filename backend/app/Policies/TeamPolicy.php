@@ -2,71 +2,72 @@
 
 namespace App\Policies;
 
-use App\Models\Team;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 class TeamPolicy
 {
     /**
+     * Perform pre-authorization checks.
+     */
+    public function before(User $user, string $ability): ?bool
+    {
+        return $user->role === 'admin' ? true : null;
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): Response
+    public function viewAny(): Response
     {
-        return $user->role === 'admin'
-            ? Response::allow()
-            : Response::deny('Você não tem permissão para visualizar os times.');
+        return Response::deny('Você não tem permissão para visualizar os times.');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Team $team): Response
+    public function view(): Response
     {
-        return $user->role === 'admin'
-            ? Response::allow()
-            : Response::deny('Você não tem permissão para visualizar os times.');
+        return Response::deny('Você não tem permissão para visualizar os times.');
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): Response
+    public function create(): Response
     {
-        return $user->role === 'admin'
-            ? Response::allow()
-            : Response::deny('Você não tem permissão para criar um time.');
+        return Response::deny('Você não tem permissão para criar um time.');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Team $team): bool
+    public function update(): Response
     {
-        return false;
+        return Response::deny('Você não tem permissão para editar um time.');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Team $team): bool
+    public function delete(): Response
     {
-        return false;
+        return Response::deny('Você não tem permissão para deletar um time.');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Team $team): bool
+    public function restore(): Response
     {
-        return false;
+        return Response::deny('Você não tem permissão para restaurar um time.');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Team $team): bool
+    public function forceDelete(): Response
     {
-        return false;
+        return Response::deny('Você não tem permissão para deletar permanentemente um time.');
     }
 }
