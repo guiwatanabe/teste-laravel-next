@@ -50,11 +50,21 @@ class GameController extends BaseController
         return new GameResource($game->load(['homeTeam', 'awayTeam']));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Game $game)
+    #[Authorize('delete', Game::class)]
+    public function destroy(int $id)
     {
-        //
+        $game = Game::findOrFail($id);
+
+        if ($game->status !== 'finished') {
+            return $this->errorResponse('Somente jogos finalizados podem ser deletados.', 400);
+        }
+
+        if ($game->played_at->lessThan(now()->subDays(3))) {
+            return $this->errorResponse('Somente jogos finalizados há menos de 3 dias podem ser deletados.', 400);
+        }
+
+        $game->delete();
+
+        return response()->json(null, 204);
     }
 }
