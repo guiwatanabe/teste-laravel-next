@@ -42,4 +42,8 @@ pest()->extend(TestCase::class)
 |
 */
 
+function createUser($attributes = []) {
+    return \App\Models\User::factory()->create($attributes);
+}
+
 // ...
