@@ -4,7 +4,7 @@ use App\Models\Team;
 use Laravel\Sanctum\Sanctum;
 
 test('unauthenticated user cannot update a team', function () {
-    $response = $this->patchJson('/api/teams/1', [
+    $response = $this->patchJson(route('teams.update', ['id' => 1]), [
         'name' => 'Team A',
         'abbreviation' => 'TMA',
     ]);
@@ -17,7 +17,7 @@ test('user with role USER cannot update a team', function () {
     Sanctum::actingAs($user);
     Team::factory()->create(['id' => 1, 'name' => 'Team A', 'abbreviation' => 'TMA']);
 
-    $response = $this->patchJson('/api/teams/1', [
+    $response = $this->patchJson(route('teams.update', ['id' => 1]), [
         'name' => 'Team A',
         'abbreviation' => 'TMA',
     ]);
@@ -33,7 +33,7 @@ test('user with role ADMIN can update a team', function () {
     Sanctum::actingAs($admin);
     Team::factory()->create(['id' => 1, 'name' => 'Old Team', 'abbreviation' => 'OLD']);
 
-    $response = $this->patchJson('/api/teams/1', [
+    $response = $this->patchJson(route('teams.update', ['id' => 1]), [
         'name' => 'Team A',
         'abbreviation' => 'TMA',
     ]);
@@ -57,7 +57,7 @@ test('cannot update a team with invalid data', function () {
     $admin = createUser(['role' => 'admin']);
     Sanctum::actingAs($admin);
 
-    $response = $this->patchJson('/api/teams/1', [
+    $response = $this->patchJson(route('teams.update', ['id' => 1]), [
         'name' => '',
         'abbreviation' => '',
     ]);
@@ -70,7 +70,7 @@ test('cannot update a non-existing team', function () {
     $admin = createUser(['role' => 'admin']);
     Sanctum::actingAs($admin);
 
-    $response = $this->patchJson('/api/teams/9999', [
+    $response = $this->patchJson(route('teams.update', ['id' => 9999]), [
         'name' => 'Team A',
         'abbreviation' => 'TMA',
     ]);
