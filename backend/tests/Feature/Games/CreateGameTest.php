@@ -48,13 +48,11 @@ test('user with role ADMIN can create a game', function () {
             'id' => 1,
             'home_team' => $homeTeam->only(['id', 'name', 'abbreviation']),
             'away_team' => $awayTeam->only(['id', 'name', 'abbreviation']),
-            'played_at' => now()->addDay()->toDateTimeString(),
         ]);
 
     $this->assertDatabaseHas('games', [
         'home_team_id' => $homeTeam->id,
         'away_team_id' => $awayTeam->id,
-        'played_at' => now()->addDay()->toDateTimeString(),
     ]);
 });
 

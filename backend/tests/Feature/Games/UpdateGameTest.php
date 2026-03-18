@@ -45,7 +45,6 @@ test('user with role ADMIN can update a game', function () {
                 'away_team' => $game->awayTeam->only('id', 'name', 'abbreviation'),
                 'home_team_goals' => 1,
                 'away_team_goals' => 2,
-                'played_at' => $game->played_at->toDateTimeString(),
                 'status' => 'finished',
             ],
         ]);

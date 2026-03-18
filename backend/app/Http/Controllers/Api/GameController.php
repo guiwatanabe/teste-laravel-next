@@ -6,10 +6,13 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Http\Resources\GameResource;
 use App\Models\Game;
+use App\Services\GameService;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
 
 class GameController extends BaseController
 {
+    public function __construct(private readonly GameService $gameService) {}
+
     #[Authorize('viewAny', Game::class)]
     public function index()
     {
@@ -20,12 +23,7 @@ class GameController extends BaseController
     public function store(StoreGameRequest $request)
     {
         $data = $request->validated();
-        $game = Game::create([
-            'home_team_id' => $data['home_team_id'],
-            'away_team_id' => $data['away_team_id'],
-            'played_at' => $data['played_at'],
-            'status' => 'scheduled',
-        ]);
+        $game = $this->gameService->createGame($data);
 
         return response()->json(new GameResource($game->load(['homeTeam', 'awayTeam'])), 201);
     }
@@ -44,8 +42,7 @@ class GameController extends BaseController
         $game = Game::findOrFail($id);
 
         $data = $request->validated();
-        $data['status'] = 'finished';
-        $game->update($data);
+        $game = $this->gameService->updateGameResult($game, $data);
 
         return new GameResource($game->load(['homeTeam', 'awayTeam']));
     }
@@ -55,12 +52,9 @@ class GameController extends BaseController
     {
         $game = Game::findOrFail($id);
 
-        if ($game->status !== 'finished') {
-            return $this->errorResponse('Somente jogos finalizados podem ser deletados.', 400);
-        }
-
-        if ($game->played_at->lessThan(now()->subDays(3))) {
-            return $this->errorResponse('Somente jogos finalizados há menos de 3 dias podem ser deletados.', 400);
+        $gameCanBeDeleted = $this->gameService->canDeleteGame($game);
+        if (! $gameCanBeDeleted['success']) {
+            return $this->errorResponse($gameCanBeDeleted['message'], 400);
         }
 
         $game->delete();
