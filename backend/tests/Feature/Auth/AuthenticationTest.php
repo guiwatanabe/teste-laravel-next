@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 
 test('user can login with valid credentials', function () {
     $user = createUser([
         'email' => 'user@example.com',
-        'password' => Hash::make('password'),
+        'password' => 'password',
     ]);
 
     $response = $this->postJson(route('login'), [
@@ -34,7 +33,7 @@ test('user cannot login without required fields', function () {
 test('user cannot login with invalid credentials', function () {
     $user = createUser([
         'email' => 'user@example.com',
-        'password' => Hash::make('password'),
+        'password' => 'password',
     ]);
 
     $response = $this->postJson(route('login'), [
@@ -52,7 +51,7 @@ test('user cannot login with invalid credentials', function () {
 test('logout invalidates tokens', function () {
     $user = createUser([
         'email' => 'user@example.com',
-        'password' => Hash::make('password'),
+        'password' => 'password',
     ]);
 
     $response = $this->postJson(route('login'), [
@@ -73,7 +72,7 @@ test('logout invalidates tokens', function () {
 test('user can refresh tokens', function () {
     $user = createUser([
         'email' => 'user@example.com',
-        'password' => Hash::make('password'),
+        'password' => 'password',
     ]);
 
     $response = $this->postJson(route('login'), [
@@ -96,7 +95,7 @@ test('user can refresh tokens', function () {
 test('refresh token cannot be used more than once', function () {
     $user = createUser([
         'email' => 'user@example.com',
-        'password' => Hash::make('password'),
+        'password' => 'password',
     ]);
 
     $response = $this->postJson(route('login'), [
@@ -123,7 +122,7 @@ test('refresh token cannot be used more than once', function () {
 test('cannot use invalid refresh token', function () {
     $user = createUser([
         'email' => 'user@example.com',
-        'password' => Hash::make('password'),
+        'password' => 'password',
     ]);
 
     $response = $this->postJson(route('login'), [
@@ -138,4 +137,29 @@ test('cannot use invalid refresh token', function () {
     ])->postJson(route('refresh-token'), [
         'refresh_token' => 'invalid-refresh-token',
     ])->assertStatus(401);
+});
+
+test('rate limits after 5 requests per minute', function () {
+    $user = createUser([
+        'email' => 'user@example.com',
+        'password' => 'password',
+    ]);
+
+    for ($i = 1; $i <= 5; $i++) {
+        $response = $this->postJson(route('login'), [
+            'email' => $user->email,
+            'password' => 'wrong_password',
+        ]);
+
+        $response->assertStatus(401);
+        $response->assertHeader('X-Ratelimit-Remaining', 5 - $i);
+    }
+
+    $response = $this->postJson(route('login'), [
+        'email' => $user->email,
+        'password' => 'wrong_password',
+    ]);
+
+    $response->assertStatus(429);
+    $response->assertHeader('X-Ratelimit-Remaining', 0);
 });
