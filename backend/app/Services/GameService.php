@@ -28,7 +28,8 @@ class GameService
             $lockedGame->home_team_goals = $data['home_team_goals'];
             $lockedGame->away_team_goals = $data['away_team_goals'];
             $lockedGame->status = 'finished';
-            $lockedGame->played_at = now();
+
+            // $lockedGame->played_at = now();
 
             $lockedGame->save();
 
