@@ -28,15 +28,15 @@ class RegisterRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'O nome é obrigatório',
-            'name.string' => 'Nome inválido',
-            'name.max' => 'O nome não pode ter mais de 255 caracteres',
-            'email.required' => 'O e-mail é obrigatório',
-            'email.email' => 'O e-mail deve ser um endereço de e-mail válido',
-            'email.unique' => 'O e-mail já está em uso',
-            'email.max' => 'O e-mail não pode ter mais de 255 caracteres',
-            'password.required' => 'A senha é obrigatória',
-            'password.min' => 'A senha deve ter pelo menos 8 caracteres',
+            'name.required' => 'O nome é obrigatório.',
+            'name.string' => 'Nome inválido.',
+            'name.max' => 'O nome não pode ter mais de 255 caracteres.',
+            'email.required' => 'O e-mail é obrigatório.',
+            'email.email' => 'O e-mail deve ser um endereço de e-mail válido.',
+            'email.unique' => 'O e-mail já está em uso.',
+            'email.max' => 'O e-mail não pode ter mais de 255 caracteres.',
+            'password.required' => 'A senha é obrigatória.',
+            'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
         ];
     }
 }
