@@ -21,6 +21,7 @@ class GameService
         $game->home_team_goals = $data['home_team_goals'];
         $game->away_team_goals = $data['away_team_goals'];
         $game->status = 'finished';
+        $game->played_at = now();
         $game->save();
 
         return $game;
