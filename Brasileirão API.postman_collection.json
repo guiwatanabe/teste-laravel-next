@@ -1,0 +1,2508 @@
+{
+  "info": {
+    "_postman_id": "b828d7e6-bbd2-42c2-b8eb-2b7bb3d7f529",
+    "name": "Brasileirão API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51945119",
+    "_collection_link": "https://go.postman.co/collection/51945119-b828d7e6-bbd2-42c2-b8eb-2b7bb3d7f529?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseJson = pm.response.json();\r",
+                  "\r",
+                  "if (responseJson && responseJson.access_token) {\r",
+                  "    pm.collectionVariables.set(\"token\", responseJson.access_token);\r",
+                  "    console.log(\"Token set to collection variable: \" + responseJson.access_token);\r",
+                  "} else {\r",
+                  "    console.log(\"Token not found in response.\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:49:44 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "refresh_token=8%7CpCG7pIfbOPVNaUP7CHU8kV7DfCCRnhgbCwl1ZmVWc1b2e9a7; expires=Fri, 20 Mar 2026 13:49:44 GMT; Max-Age=86400; path=/; secure; httponly; samesite=none"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"access_token\": \"7|mvQIkqkys0S4ZMWao6z1WvUdI7i7JkOkT9KidbiO2846c940\",\n    \"token_type\": \"Bearer\",\n    \"expires_in\": 900\n}"
+            },
+            {
+              "name": "401",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"passwords\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:50:10 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Endereço de e-mail ou senha inválidos.\"\n}"
+            },
+            {
+              "name": "422",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:50:51 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Endereço de e-mail ou senha inválidos.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/auth/logout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:51:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "refresh_token=deleted; expires=Wed, 19 Mar 2025 13:51:18 GMT; Max-Age=0; path=/; httponly; samesite=lax"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Logout realizado com sucesso.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/user",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "user"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/auth/user",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "user"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:55:53 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Usuário autenticado.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"name\": \"Test Admin\",\n            \"email\": \"admin@example.com\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseJson = pm.response.json();\r",
+                  "\r",
+                  "if (responseJson && responseJson.access_token) {\r",
+                  "    pm.collectionVariables.set(\"token\", responseJson.access_token);\r",
+                  "    console.log(\"Token set to collection variable: \" + responseJson.access_token);\r",
+                  "} else {\r",
+                  "    console.log(\"Token not found in response.\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/refresh-token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"User Name\",\n  \"email\": \"user1@example.com\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "422",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"User Name\",\n  \"email\": \"user@example.com\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:56:10 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Falha na validação dos dados.\",\n    \"errors\": {\n        \"email\": [\n            \"O e-mail já está em uso\"\n        ]\n    }\n}"
+            },
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"User Name\",\n  \"email\": \"user1@example.com\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:56:21 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Usuário registrado com sucesso.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 3,\n            \"name\": \"User Name\",\n            \"email\": \"user1@example.com\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "profile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "profile"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:56:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Perfil atualizado com sucesso.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"name\": \"New Name\",\n            \"email\": \"admin@example.com\"\n        }\n    }\n}"
+            },
+            {
+              "name": "422",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "profile"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:56:55 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Falha na validação dos dados.\",\n    \"errors\": {\n        \"name\": [\n            \"Nome inválido\"\n        ]\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "List Teams",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/teams",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "teams"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/teams",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:57:10 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Torphy PLC\",\n            \"abbreviation\": \"ZFL\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Krajcik, Lebsack and Schneider\",\n            \"abbreviation\": \"REI\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"McDermott, Hyatt and Smith\",\n            \"abbreviation\": \"KYU\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Mraz Inc\",\n            \"abbreviation\": \"GKR\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Green-Reichert\",\n            \"abbreviation\": \"HRN\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Gibson, Thompson and Brown\",\n            \"abbreviation\": \"HPT\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Johnston, Daugherty and Wuckert\",\n            \"abbreviation\": \"SQD\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Morar, Jones and Gislason\",\n            \"abbreviation\": \"ULL\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Smitham Group\",\n            \"abbreviation\": \"KXL\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Waters, Schmeler and Rowe\",\n            \"abbreviation\": \"DDL\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://localhost:8000/api/teams?page=1\",\n        \"last\": \"http://localhost:8000/api/teams?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/teams?page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"page\": null,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://localhost:8000/api/teams\",\n        \"per_page\": 10,\n        \"to\": 10,\n        \"total\": 10\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Team",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/teams/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "teams",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/teams/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:57:34 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Torphy PLC\",\n        \"abbreviation\": \"ZFL\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Team Name\",\n  \"abbreviation\": \"TNM\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/teams",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "teams"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Team Name\",\n  \"abbreviation\": \"TNM\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/teams",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:57:55 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 12,\n    \"name\": \"Team Name\",\n    \"abbreviation\": \"TNM\"\n}"
+            },
+            {
+              "name": "422",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Team Name\",\n  \"abbreviation\": \"TNM\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/teams",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:03:25 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Falha na validação dos dados.\",\n    \"errors\": {\n        \"abbreviation\": [\n            \"Já existe um time com essa sigla.\"\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Team",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/teams/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "teams",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "12"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/teams/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "12"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 13:58:26 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": 12,\n        \"name\": \"Updated Name\",\n        \"abbreviation\": \"TNM\"\n    }\n}"
+            },
+            {
+              "name": "422",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/teams/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "12"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:03:35 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Falha na validação dos dados.\",\n    \"errors\": {\n        \"name\": [\n            \"Nome do time inválido.\"\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Team",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/teams/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "teams",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/teams/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "12"
+                    }
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:03:46 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "404",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/teams/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "12"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:03:55 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Recurso não encontrado.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "item": [
+        {
+          "name": "List Games",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/games",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "games"
+              ],
+              "query": [
+                {
+                  "key": "team_name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "played_at_from",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "played_at_to",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/games",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "played_at_from",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "played_at_to",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:04:21 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"home_team\": {\n                \"id\": 5,\n                \"name\": \"Green-Reichert\",\n                \"abbreviation\": \"HRN\"\n            },\n            \"away_team\": {\n                \"id\": 3,\n                \"name\": \"McDermott, Hyatt and Smith\",\n                \"abbreviation\": \"KYU\"\n            },\n            \"home_team_goals\": 1,\n            \"away_team_goals\": 3,\n            \"played_at\": \"2025-12-14T15:59:27.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 2,\n            \"home_team\": {\n                \"id\": 2,\n                \"name\": \"Krajcik, Lebsack and Schneider\",\n                \"abbreviation\": \"REI\"\n            },\n            \"away_team\": {\n                \"id\": 8,\n                \"name\": \"Morar, Jones and Gislason\",\n                \"abbreviation\": \"ULL\"\n            },\n            \"home_team_goals\": 2,\n            \"away_team_goals\": 3,\n            \"played_at\": \"2025-03-31T12:47:43.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 3,\n            \"home_team\": {\n                \"id\": 10,\n                \"name\": \"Waters, Schmeler and Rowe\",\n                \"abbreviation\": \"DDL\"\n            },\n            \"away_team\": {\n                \"id\": 5,\n                \"name\": \"Green-Reichert\",\n                \"abbreviation\": \"HRN\"\n            },\n            \"home_team_goals\": 4,\n            \"away_team_goals\": 1,\n            \"played_at\": \"2025-10-31T16:19:26.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 4,\n            \"home_team\": {\n                \"id\": 9,\n                \"name\": \"Smitham Group\",\n                \"abbreviation\": \"KXL\"\n            },\n            \"away_team\": {\n                \"id\": 3,\n                \"name\": \"McDermott, Hyatt and Smith\",\n                \"abbreviation\": \"KYU\"\n            },\n            \"home_team_goals\": 0,\n            \"away_team_goals\": 0,\n            \"played_at\": \"2025-05-12T11:34:06.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 5,\n            \"home_team\": {\n                \"id\": 5,\n                \"name\": \"Green-Reichert\",\n                \"abbreviation\": \"HRN\"\n            },\n            \"away_team\": {\n                \"id\": 3,\n                \"name\": \"McDermott, Hyatt and Smith\",\n                \"abbreviation\": \"KYU\"\n            },\n            \"home_team_goals\": 2,\n            \"away_team_goals\": 5,\n            \"played_at\": \"2025-08-13T09:03:29.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 6,\n            \"home_team\": {\n                \"id\": 3,\n                \"name\": \"McDermott, Hyatt and Smith\",\n                \"abbreviation\": \"KYU\"\n            },\n            \"away_team\": {\n                \"id\": 7,\n                \"name\": \"Johnston, Daugherty and Wuckert\",\n                \"abbreviation\": \"SQD\"\n            },\n            \"home_team_goals\": 1,\n            \"away_team_goals\": 1,\n            \"played_at\": \"2025-11-04T07:02:42.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 7,\n            \"home_team\": {\n                \"id\": 10,\n                \"name\": \"Waters, Schmeler and Rowe\",\n                \"abbreviation\": \"DDL\"\n            },\n            \"away_team\": {\n                \"id\": 1,\n                \"name\": \"Torphy PLC\",\n                \"abbreviation\": \"ZFL\"\n            },\n            \"home_team_goals\": 0,\n            \"away_team_goals\": 1,\n            \"played_at\": \"2025-04-18T01:39:22.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 8,\n            \"home_team\": {\n                \"id\": 1,\n                \"name\": \"Torphy PLC\",\n                \"abbreviation\": \"ZFL\"\n            },\n            \"away_team\": {\n                \"id\": 2,\n                \"name\": \"Krajcik, Lebsack and Schneider\",\n                \"abbreviation\": \"REI\"\n            },\n            \"home_team_goals\": 1,\n            \"away_team_goals\": 3,\n            \"played_at\": \"2025-06-16T13:49:12.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 9,\n            \"home_team\": {\n                \"id\": 4,\n                \"name\": \"Mraz Inc\",\n                \"abbreviation\": \"GKR\"\n            },\n            \"away_team\": {\n                \"id\": 9,\n                \"name\": \"Smitham Group\",\n                \"abbreviation\": \"KXL\"\n            },\n            \"home_team_goals\": 4,\n            \"away_team_goals\": 0,\n            \"played_at\": \"2025-05-28T19:10:00.000000Z\",\n            \"status\": \"finished\"\n        },\n        {\n            \"id\": 10,\n            \"home_team\": {\n                \"id\": 9,\n                \"name\": \"Smitham Group\",\n                \"abbreviation\": \"KXL\"\n            },\n            \"away_team\": {\n                \"id\": 4,\n                \"name\": \"Mraz Inc\",\n                \"abbreviation\": \"GKR\"\n            },\n            \"home_team_goals\": 2,\n            \"away_team_goals\": 0,\n            \"played_at\": \"2025-05-05T01:49:15.000000Z\",\n            \"status\": \"finished\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://localhost:8000/api/games?page=1\",\n        \"last\": \"http://localhost:8000/api/games?page=2\",\n        \"prev\": null,\n        \"next\": \"http://localhost:8000/api/games?page=2\"\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 2,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/games?page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": \"http://localhost:8000/api/games?page=2\",\n                \"label\": \"2\",\n                \"page\": 2,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/games?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"page\": 2,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://localhost:8000/api/games\",\n        \"per_page\": 10,\n        \"to\": 10,\n        \"total\": 20\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Game",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/games/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "games",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/games/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:04:44 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": 1,\n        \"home_team\": {\n            \"id\": 5,\n            \"name\": \"Green-Reichert\",\n            \"abbreviation\": \"HRN\"\n        },\n        \"away_team\": {\n            \"id\": 3,\n            \"name\": \"McDermott, Hyatt and Smith\",\n            \"abbreviation\": \"KYU\"\n        },\n        \"home_team_goals\": 1,\n        \"away_team_goals\": 3,\n        \"played_at\": \"2025-12-14T15:59:27.000000Z\",\n        \"status\": \"finished\"\n    }\n}"
+            },
+            {
+              "name": "404",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/games/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "123"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:04:54 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Recurso não encontrado.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Game",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"home_team_id\": 1,\n  \"away_team_id\": 2,\n  \"played_at\": \"2026-03-29 16:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/games",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "games"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"home_team_id\": 1,\n  \"away_team_id\": 2,\n  \"played_at\": \"2026-03-29 16:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/games",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:05:09 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 22,\n    \"home_team\": {\n        \"id\": 1,\n        \"name\": \"Torphy PLC\",\n        \"abbreviation\": \"ZFL\"\n    },\n    \"away_team\": {\n        \"id\": 2,\n        \"name\": \"Krajcik, Lebsack and Schneider\",\n        \"abbreviation\": \"REI\"\n    },\n    \"home_team_goals\": null,\n    \"away_team_goals\": null,\n    \"played_at\": \"2026-03-29T16:00:00.000000Z\",\n    \"status\": \"scheduled\"\n}"
+            },
+            {
+              "name": "422",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"home_team_id\": 1,\n  \"away_team_id\": 2,\n  \"played_at\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/games",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:05:24 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Falha na validação dos dados.\",\n    \"errors\": {\n        \"played_at\": [\n            \"Favor preencher a data e hora da partida.\"\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Game",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"home_team_goals\": 1,\n  \"away_team_goals\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/games/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "games",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "21"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "404",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"home_team_goals\": 1,\n  \"away_team_goals\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/games/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "21"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:05:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Recurso não encontrado.\"\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"home_team_goals\": 1,\n  \"away_team_goals\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/games/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "12"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:05:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": 12,\n        \"home_team\": {\n            \"id\": 2,\n            \"name\": \"Krajcik, Lebsack and Schneider\",\n            \"abbreviation\": \"REI\"\n        },\n        \"away_team\": {\n            \"id\": 7,\n            \"name\": \"Johnston, Daugherty and Wuckert\",\n            \"abbreviation\": \"SQD\"\n        },\n        \"home_team_goals\": 1,\n        \"away_team_goals\": 2,\n        \"played_at\": \"2026-03-19T14:05:50.000000Z\",\n        \"status\": \"finished\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Game",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/games/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "games",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "404",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/games/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "21"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:06:59 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Recurso não encontrado.\"\n}"
+            },
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/games/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "11"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:07:06 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"error\",\n    \"message\": \"Somente jogos finalizados nos últimos 3 dias podem ser deletados.\"\n}"
+            },
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/games/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "games",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:08:08 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Scoreboard",
+      "item": [
+        {
+          "name": "Get Scoreboard",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/scoreboard",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "scoreboard"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/scoreboard",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "scoreboard"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.9"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 19 Mar 2026 14:08:28 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "10"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "9"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Placar atualizado com sucesso.\",\n    \"data\": [\n        {\n            \"team_id\": 3,\n            \"team_name\": \"McDermott, Hyatt and Smith\",\n            \"points\": 11,\n            \"games\": 7,\n            \"wins\": 3,\n            \"draws\": 2,\n            \"losses\": 2,\n            \"goals_for\": 16,\n            \"goals_against\": 15,\n            \"goal_difference\": 1\n        },\n        {\n            \"team_id\": 2,\n            \"team_name\": \"Krajcik, Lebsack and Schneider\",\n            \"points\": 10,\n            \"games\": 7,\n            \"wins\": 3,\n            \"draws\": 1,\n            \"losses\": 3,\n            \"goals_for\": 23,\n            \"goals_against\": 18,\n            \"goal_difference\": 5\n        },\n        {\n            \"team_id\": 9,\n            \"team_name\": \"Smitham Group\",\n            \"points\": 7,\n            \"games\": 4,\n            \"wins\": 2,\n            \"draws\": 1,\n            \"losses\": 1,\n            \"goals_for\": 4,\n            \"goals_against\": 4,\n            \"goal_difference\": 0\n        },\n        {\n            \"team_id\": 4,\n            \"team_name\": \"Mraz Inc\",\n            \"points\": 6,\n            \"games\": 3,\n            \"wins\": 2,\n            \"draws\": 0,\n            \"losses\": 1,\n            \"goals_for\": 9,\n            \"goals_against\": 5,\n            \"goal_difference\": 4\n        },\n        {\n            \"team_id\": 5,\n            \"team_name\": \"Green-Reichert\",\n            \"points\": 6,\n            \"games\": 5,\n            \"wins\": 2,\n            \"draws\": 0,\n            \"losses\": 3,\n            \"goals_for\": 12,\n            \"goals_against\": 16,\n            \"goal_difference\": -4\n        },\n        {\n            \"team_id\": 7,\n            \"team_name\": \"Johnston, Daugherty and Wuckert\",\n            \"points\": 4,\n            \"games\": 2,\n            \"wins\": 1,\n            \"draws\": 1,\n            \"losses\": 0,\n            \"goals_for\": 3,\n            \"goals_against\": 2,\n            \"goal_difference\": 1\n        },\n        {\n            \"team_id\": 10,\n            \"team_name\": \"Waters, Schmeler and Rowe\",\n            \"points\": 3,\n            \"games\": 2,\n            \"wins\": 1,\n            \"draws\": 0,\n            \"losses\": 1,\n            \"goals_for\": 4,\n            \"goals_against\": 2,\n            \"goal_difference\": 2\n        },\n        {\n            \"team_id\": 8,\n            \"team_name\": \"Morar, Jones and Gislason\",\n            \"points\": 3,\n            \"games\": 2,\n            \"wins\": 1,\n            \"draws\": 0,\n            \"losses\": 1,\n            \"goals_for\": 5,\n            \"goals_against\": 5,\n            \"goal_difference\": 0\n        },\n        {\n            \"team_id\": 1,\n            \"team_name\": \"Torphy PLC\",\n            \"points\": 3,\n            \"games\": 4,\n            \"wins\": 1,\n            \"draws\": 0,\n            \"losses\": 3,\n            \"goals_for\": 4,\n            \"goals_against\": 10,\n            \"goal_difference\": -6\n        },\n        {\n            \"team_id\": 6,\n            \"team_name\": \"Gibson, Thompson and Brown\",\n            \"points\": 1,\n            \"games\": 2,\n            \"wins\": 0,\n            \"draws\": 1,\n            \"losses\": 1,\n            \"goals_for\": 7,\n            \"goals_against\": 10,\n            \"goal_difference\": -3\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
