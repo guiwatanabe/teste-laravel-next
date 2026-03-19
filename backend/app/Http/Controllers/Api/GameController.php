@@ -16,7 +16,18 @@ class GameController extends BaseController
     #[Authorize('viewAny', Game::class)]
     public function index()
     {
-        return GameResource::collection(Game::with(['homeTeam', 'awayTeam'])->paginate(10));
+        $validated = request()->validate([
+            'team_name' => 'nullable|string|max:255',
+            'played_at_from' => 'nullable|date',
+            'played_at_to' => 'nullable|date|after_or_equal:played_at_from',
+        ]);
+
+        $query = Game::with(['homeTeam', 'awayTeam'])
+            ->withTeamName($validated['team_name'] ?? null)
+            ->playedAtFrom($validated['played_at_from'] ?? null)
+            ->playedAtTo($validated['played_at_to'] ?? null);
+
+        return GameResource::collection($query->paginate(10));
     }
 
     #[Authorize('create', Game::class)]
