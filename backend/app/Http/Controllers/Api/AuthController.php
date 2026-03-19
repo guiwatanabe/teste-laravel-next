@@ -34,6 +34,11 @@ class AuthController extends BaseController
     public function logout(Request $request): JsonResponse
     {
         $user = $request->user();
+
+        if (! $user) {
+            return $this->errorResponse('Usuário não autenticado.', 401);
+        }
+
         $this->authService->revokeTokens($user);
         $cookie = cookie()->forget('refresh_token');
 

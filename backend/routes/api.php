@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->middleware('throttle:5,1,api-login')->name('login');
-    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum')->name('user');
     Route::post('refresh-token', [AuthController::class, 'refresh'])->name('refresh-token');
     Route::post('register', [AuthController::class, 'register'])->name('register');
