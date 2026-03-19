@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GameController;
+use App\Http\Controllers\Api\ScoreboardController;
 use App\Http\Controllers\Api\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
-    Route::post('login', [AuthController::class, 'login'])->name('login')->middleware('throttle:5,1,api-login');
+    Route::post('login', [AuthController::class, 'login'])->middleware('throttle:5,1,api-login')->name('login');
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
     Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum')->name('user');
     Route::post('refresh-token', [AuthController::class, 'refresh'])->name('refresh-token');
@@ -29,3 +30,5 @@ Route::prefix('games')->middleware('auth:sanctum')->group(function () {
     Route::patch('/{id}', [GameController::class, 'update'])->whereNumber('id')->name('games.update');
     Route::delete('/{id}', [GameController::class, 'destroy'])->whereNumber('id')->name('games.destroy');
 });
+
+Route::get('/scoreboard', [ScoreboardController::class, 'index'])->middleware('throttle:10,1,get-scoreboard')->name('scoreboard.index');
