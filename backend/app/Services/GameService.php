@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Game;
+use Illuminate\Support\Facades\DB;
 
 class GameService
 {
@@ -18,13 +19,21 @@ class GameService
 
     public function updateGameResult(Game $game, array $data): Game
     {
-        $game->home_team_goals = $data['home_team_goals'];
-        $game->away_team_goals = $data['away_team_goals'];
-        $game->status = 'finished';
-        $game->played_at = now();
-        $game->save();
+        return DB::transaction(function () use ($game, $data) {
+            $lockedGame = Game::query()
+                ->whereKey($game->id)
+                ->lockForUpdate()
+                ->firstOrFail();
 
-        return $game;
+            $lockedGame->home_team_goals = $data['home_team_goals'];
+            $lockedGame->away_team_goals = $data['away_team_goals'];
+            $lockedGame->status = 'finished';
+            $lockedGame->played_at = now();
+
+            $lockedGame->save();
+
+            return $lockedGame->fresh();
+        });
     }
 
     public function canDeleteGame(Game $game): array
