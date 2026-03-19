@@ -54,20 +54,4 @@ class TeamPolicy
     {
         return Response::deny('Você não tem permissão para deletar um time.');
     }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(): Response
-    {
-        return Response::deny('Você não tem permissão para restaurar um time.');
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(): Response
-    {
-        return Response::deny('Você não tem permissão para deletar permanentemente um time.');
-    }
 }

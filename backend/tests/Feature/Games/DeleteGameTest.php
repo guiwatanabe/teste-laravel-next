@@ -68,3 +68,20 @@ test('cannot delete a non-existing game', function () {
 
     $response->assertStatus(404);
 });
+
+test('cannot delete a game that is not finished', function () {
+    $admin = createUser(['role' => 'admin']);
+    Sanctum::actingAs($admin);
+
+    Game::factory()->create([
+        'status' => 'scheduled',
+        'played_at' => now()->addDay(1),
+    ]);
+
+    $response = $this->deleteJson(route('games.destroy', ['id' => 1]));
+
+    $response->assertStatus(400);
+    $this->assertDatabaseHas('games', [
+        'id' => 1,
+    ]);
+});

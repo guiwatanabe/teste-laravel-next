@@ -54,20 +54,4 @@ class GamePolicy
     {
         return Response::deny('Você não tem permissão para deletar jogos.');
     }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(): Response
-    {
-        return Response::deny('Você não tem permissão para restaurar jogos.');
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(): Response
-    {
-        return Response::deny('Você não tem permissão para deletar jogos permanentemente.');
-    }
 }
