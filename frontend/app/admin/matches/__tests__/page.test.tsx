@@ -128,4 +128,41 @@ describe("MatchesPage", () => {
     fireEvent.click(cells[0].closest("tr")!);
     expect(mockPush).toHaveBeenCalledWith("/admin/matches/7");
   });
+
+  it("passes status filter to getGames when Filtrar is clicked", async () => {
+    mockGetGames.mockResolvedValue({ data: [], meta: makeMeta(0) });
+    render(<MatchesPage />);
+    await screen.findByText("Nenhuma partida encontrada.");
+
+    // Open the Select and choose "Finalizada"
+    fireEvent.click(screen.getByRole("combobox"));
+    fireEvent.click(await screen.findByText("Finalizada"));
+
+    mockGetGames.mockClear();
+    mockGetGames.mockResolvedValue({ data: [], meta: makeMeta(0) });
+    fireEvent.click(screen.getByText("Filtrar"));
+
+    await screen.findByText("Nenhuma partida encontrada.");
+    expect(mockGetGames).toHaveBeenCalledWith(
+      expect.objectContaining({ status: "finished" })
+    );
+  });
+
+  it("omits status from getGames call when Todos is selected", async () => {
+    mockGetGames.mockResolvedValue({ data: [], meta: makeMeta(0) });
+    render(<MatchesPage />);
+    await screen.findByText("Nenhuma partida encontrada.");
+
+    // Choose a status then clear it via Limpar
+    fireEvent.click(screen.getByRole("combobox"));
+    fireEvent.click(await screen.findByText("Agendada"));
+
+    mockGetGames.mockClear();
+    mockGetGames.mockResolvedValue({ data: [], meta: makeMeta(0) });
+    fireEvent.click(screen.getByText("Limpar"));
+
+    await screen.findByText("Nenhuma partida encontrada.");
+    const lastCall = mockGetGames.mock.calls[mockGetGames.mock.calls.length - 1][0];
+    expect(lastCall.status).toBeUndefined();
+  });
 });

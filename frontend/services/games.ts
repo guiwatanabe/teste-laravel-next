@@ -21,6 +21,7 @@ export interface GamesFilters {
   team_name?: string;
   played_at_from?: string;
   played_at_to?: string;
+  status?: "scheduled" | "finished";
   page?: number;
 }
 
@@ -29,6 +30,7 @@ export async function getGames(filters: GamesFilters = {}): Promise<GamesRespons
   if (filters.team_name) params.team_name = filters.team_name;
   if (filters.played_at_from) params.played_at_from = filters.played_at_from;
   if (filters.played_at_to) params.played_at_to = filters.played_at_to;
+  if (filters.status) params.status = filters.status;
   if (filters.page) params.page = filters.page;
 
   const res = await axiosInstance.get<GamesResponse>("/api/games", { params });
