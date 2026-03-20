@@ -23,4 +23,9 @@ class Team extends Model
     {
         return $this->hasMany(Game::class, 'away_team_id');
     }
+
+    public function matches(): HasMany
+    {
+        return $this->homeGames()->union($this->awayGames());
+    }
 }

@@ -33,13 +33,12 @@ class AuthController extends BaseController
 
     public function logout(Request $request): JsonResponse
     {
-        $user = $request->user();
+        $user = $request->user('sanctum');
 
-        if (! $user) {
-            return $this->errorResponse('Usuário não autenticado.', 401);
+        if ($user) {
+            $this->authService->revokeTokens($user);
         }
 
-        $this->authService->revokeTokens($user);
         $cookie = cookie()->forget('refresh_token');
 
         return $this->successResponse('Logout realizado com sucesso.')->withCookie($cookie);
@@ -67,7 +66,7 @@ class AuthController extends BaseController
     public function user(Request $request): JsonResponse
     {
         return $this->successResponse('Usuário autenticado.', 200, [
-            'user' => $request->user()->only(['id', 'name', 'email']),
+            'user' => $request->user()->only(['id', 'name', 'email', 'role']),
         ]);
     }
 

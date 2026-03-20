@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Game;
 use App\Models\Team;
 use Laravel\Sanctum\Sanctum;
 
@@ -42,4 +43,19 @@ test('cannot delete a non-existing team', function () {
     $response = $this->deleteJson(route('teams.destroy', ['id' => 9999]));
 
     $response->assertStatus(404);
+});
+
+test('cannot delete a team with associated games', function () {
+    $admin = createUser(['role' => 'admin']);
+    Sanctum::actingAs($admin);
+
+    $team = Team::factory()->create();
+    $game = Game::factory()->create(['home_team_id' => $team->id, 'away_team_id' => Team::factory()->create()->id]);
+
+    $response = $this->deleteJson(route('teams.destroy', ['id' => $team->id]));
+
+    $response->assertStatus(400);
+    $response->assertJson([
+        'message' => 'Não é possível excluir um time que possui partidas associadas.',
+    ]);
 });

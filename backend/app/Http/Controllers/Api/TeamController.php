@@ -48,6 +48,11 @@ class TeamController extends BaseController
     public function destroy(int $id)
     {
         $team = Team::findOrFail($id);
+
+        if ($team->matches()->exists()) {
+            return $this->errorResponse('Não é possível excluir um time que possui partidas associadas.', 400);
+        }
+
         $team->delete();
 
         return response()->json(null, 204);

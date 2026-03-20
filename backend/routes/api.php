@@ -31,4 +31,4 @@ Route::prefix('games')->middleware('auth:sanctum')->group(function () {
     Route::delete('/{id}', [GameController::class, 'destroy'])->whereNumber('id')->name('games.destroy');
 });
 
-Route::get('/scoreboard', [ScoreboardController::class, 'index'])->middleware('throttle:10,1,get-scoreboard')->name('scoreboard.index');
+Route::get('/scoreboard', [ScoreboardController::class, 'index'])->middleware(['auth:sanctum', 'throttle:10,1,get-scoreboard'])->name('scoreboard.index');

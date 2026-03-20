@@ -10,8 +10,6 @@ Comecei pelas funcionalidades de login, logout, perfil e registro, e depois fui 
 
 > A tabela de classificação é calculada dinamicamente, não é persistida no banco de dados, então todos os dados de pontuação são refletidos de forma imediata.
 
-> A tabela de classificação está pública - _Tabela de Classificação (Visão Pública)_.
-
 ## Testes
 
 **100%** de cobertura de testes, com todos os testes **OK**.

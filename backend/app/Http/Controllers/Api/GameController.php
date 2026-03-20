@@ -23,6 +23,7 @@ class GameController extends BaseController
         ]);
 
         $query = Game::with(['homeTeam', 'awayTeam'])
+            ->orderBy('played_at', 'desc')
             ->withTeamName($validated['team_name'] ?? null)
             ->playedAtFrom($validated['played_at_from'] ?? null)
             ->playedAtTo($validated['played_at_to'] ?? null);
@@ -51,6 +52,10 @@ class GameController extends BaseController
     public function update(UpdateGameRequest $request, int $id)
     {
         $game = Game::findOrFail($id);
+
+        if ($game->played_at->greaterThan(now())) {
+            return $this->errorResponse('Resultados só podem ser atualizados para jogos passados.', 400);
+        }
 
         $data = $request->validated();
         $game = $this->gameService->updateGameResult($game, $data);

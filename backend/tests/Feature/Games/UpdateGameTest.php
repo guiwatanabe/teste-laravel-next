@@ -83,3 +83,27 @@ test('cannot update a non-existing game', function () {
 
     $response->assertStatus(404);
 });
+
+test('can only update a game that with played_at in the past', function () {
+    $admin = createUser(['role' => 'admin']);
+    Sanctum::actingAs($admin);
+    $game = Game::factory()->create(['id' => 1, 'home_team_goals' => 0, 'away_team_goals' => 0, 'played_at' => now()->addDay()]);
+
+    $response = $this->patchJson(route('games.update', ['id' => 1]), [
+        'home_team_goals' => 1,
+        'away_team_goals' => 2,
+    ]);
+
+    $response->assertStatus(400)
+        ->assertJson([
+            'message' => 'Resultados só podem ser atualizados para jogos passados.',
+        ]);
+
+    $this->assertDatabaseHas('games', [
+        'id' => 1,
+        'home_team_id' => $game->home_team_id,
+        'away_team_id' => $game->away_team_id,
+        'home_team_goals' => 0,
+        'away_team_goals' => 0,
+    ]);
+});
