@@ -79,4 +79,16 @@ class Game extends Model
 
         return $query->where('played_at', '<=', $date);
     }
+
+    /**
+     * Scope to filter by game status
+     */
+    public function scopeWithStatus(Builder $query, ?string $status = null): Builder
+    {
+        if (! $status) {
+            return $query;
+        }
+
+        return $query->where('status', $status);
+    }
 }

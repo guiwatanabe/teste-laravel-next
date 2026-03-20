@@ -20,13 +20,15 @@ class GameController extends BaseController
             'team_name' => 'nullable|string|max:255',
             'played_at_from' => 'nullable|date',
             'played_at_to' => 'nullable|date|after_or_equal:played_at_from',
+            'status' => 'nullable|in:scheduled,finished',
         ]);
 
         $query = Game::with(['homeTeam', 'awayTeam'])
             ->orderBy('played_at', 'desc')
             ->withTeamName($validated['team_name'] ?? null)
             ->playedAtFrom($validated['played_at_from'] ?? null)
-            ->playedAtTo($validated['played_at_to'] ?? null);
+            ->playedAtTo($validated['played_at_to'] ?? null)
+            ->withStatus($validated['status'] ?? null);
 
         return GameResource::collection($query->paginate(10));
     }

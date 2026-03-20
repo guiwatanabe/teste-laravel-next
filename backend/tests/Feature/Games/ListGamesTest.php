@@ -81,3 +81,16 @@ test('results get paginated', function () {
     $response->assertJsonPath('meta.current_page', 2);
     $response->assertJsonCount(5, 'data');
 });
+
+test('results get filtered by status', function () {
+    $user = createUser(['role' => 'admin']);
+    Sanctum::actingAs($user);
+
+    Game::factory()->create(['status' => 'scheduled']);
+    Game::factory()->create(['status' => 'finished']);
+
+    $response = $this->getJson(route('games.index', ['status' => 'finished']));
+
+    $response->assertStatus(200);
+    $response->assertJsonCount(1, 'data');
+});
