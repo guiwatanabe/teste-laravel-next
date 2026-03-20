@@ -1,0 +1,75 @@
+networks:
+  laravel:
+    driver: bridge
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    container_name: api
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/var/www/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - laravel
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+    networks:
+      - laravel
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/app
+      - ./backend/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api
+    networks:
+      - laravel
+  mysql:
+    env_file:
+      - ./backend/.env
+    platform: linux/amd64
+    image: 'mysql/mysql-server:8.0'
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:-laravel}"
+      MYSQL_USER: "${DB_USERNAME:-laravel}"
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_PASSWORD: "${DB_PASSWORD:-laravel}"
+      MYSQL_ROOT_HOST: "%"
+    networks:
+      - laravel
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD:-laravel}"]
+        retries: 3
+        timeout: 5s
+
+volumes:
+  mysql-data:
