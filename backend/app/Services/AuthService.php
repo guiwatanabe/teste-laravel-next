@@ -8,8 +8,8 @@ class AuthService
 {
     public function generateTokens(User $user): array
     {
-        $accessTokenExpiration = now()->addMinutes(config('sanctum.expiration'));
-        $refreshTokenExpiration = now()->addMinutes(config('sanctum.expiration_refresh'));
+        $accessTokenExpiration = now()->addMinutes((int) config('sanctum.expiration'));
+        $refreshTokenExpiration = now()->addMinutes((int) config('sanctum.expiration_refresh'));
 
         $accessToken = $user->createToken('access_token', ['access-api'], $accessTokenExpiration);
         $refreshToken = $user->createToken('refresh_token', ['refresh-access-token'], $refreshTokenExpiration);
