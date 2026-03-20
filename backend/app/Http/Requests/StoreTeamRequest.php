@@ -14,7 +14,7 @@ class StoreTeamRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:teams,name'],
             'abbreviation' => ['required', 'string', 'size:3', 'unique:teams,abbreviation'],
         ];
     }
