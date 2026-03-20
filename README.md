@@ -20,6 +20,17 @@ cp backend/.env.example backend/.env
 docker compose up
 ```
 
+## Observações
+
+Por se tratar de um teste técnico e para facilitar a avaliação, o container irá rodar migrations e seeders de dados padrão para teste (usuário admin, usuário comum, times e jogos).
+
+#### Usuários de teste
+
+| Role    | Email               | Senha    |
+| ---     | ---                 | ---      |
+| ADMIN   | admin@example.com   | password |
+| USER    | user@example.com    | password |
+
 ---
 
 ## Backend
