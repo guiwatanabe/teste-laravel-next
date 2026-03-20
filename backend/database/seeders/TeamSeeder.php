@@ -12,6 +12,10 @@ class TeamSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Team::count() > 0) {
+            return;
+        }
+
         Team::factory()->count(10)->create();
     }
 }
