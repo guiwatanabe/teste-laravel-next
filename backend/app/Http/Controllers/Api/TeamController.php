@@ -13,7 +13,7 @@ class TeamController extends BaseController
     #[Authorize('viewAny', Team::class)]
     public function index()
     {
-        return TeamResource::collection(Team::paginate(10));
+        return TeamResource::collection(Team::withCount(['homeGames', 'awayGames'])->paginate(10));
     }
 
     #[Authorize('create', Team::class)]
@@ -28,7 +28,7 @@ class TeamController extends BaseController
     #[Authorize('view', Team::class)]
     public function show(int $id)
     {
-        $team = Team::findOrFail($id);
+        $team = Team::withCount(['homeGames', 'awayGames'])->findOrFail($id);
 
         return new TeamResource($team);
     }
