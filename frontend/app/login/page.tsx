@@ -47,6 +47,7 @@ export default function LoginPage() {
       email: "",
       password: "",
     },
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = async (data: LoginFormValues) => {

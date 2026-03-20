@@ -33,6 +33,7 @@ export function TeamForm({
   } = useForm<TeamFormValues>({
     resolver: zodResolver(teamSchema),
     defaultValues: { name: "", abbreviation: "", ...defaultValues },
+    reValidateMode: 'onChange',
   });
 
   return (

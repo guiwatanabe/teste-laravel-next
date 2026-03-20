@@ -57,6 +57,7 @@ export default function ProfilePage() {
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: { name: "", email: "", current_password: "", password: "", password_confirmation: "" },
+    reValidateMode: 'onChange',
   });
 
   useEffect(() => {

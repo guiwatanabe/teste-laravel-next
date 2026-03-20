@@ -39,6 +39,7 @@ export function ScoreModal({
   } = useForm<ScoreFormValues>({
     resolver: zodResolver(scoreSchema),
     defaultValues: { home_team_goals: 0, away_team_goals: 0 },
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = (values: ScoreFormValues) => {

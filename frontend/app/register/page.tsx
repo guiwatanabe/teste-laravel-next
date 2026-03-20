@@ -58,6 +58,7 @@ export default function RegisterPage() {
       password: "",
       password_confirmation: "",
     },
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = async (data: RegisterFormValues) => {
