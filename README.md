@@ -3,7 +3,6 @@
 ## Requisitos
 
 - Docker
-- GNU make (Windows: Git Bash ou WSL)
 
 ## Portas
 
